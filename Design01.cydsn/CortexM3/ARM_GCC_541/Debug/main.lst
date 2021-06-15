@@ -1,0 +1,988 @@
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.medicion,"ax",%progbits
+  20              		.align	2
+  21              		.global	medicion
+  22              		.thumb
+  23              		.thumb_func
+  24              		.type	medicion, %function
+  25              	medicion:
+  26              	.LFB64:
+  27              		.file 1 "main.c"
+   1:main.c        **** /* ========================================
+   2:main.c        ****  *
+   3:main.c        ****  * Copyright YOUR COMPANY, THE YEAR
+   4:main.c        ****  * All Rights Reserved
+   5:main.c        ****  * UNPUBLISHED, LICENSED SOFTWARE.
+   6:main.c        ****  *
+   7:main.c        ****  * CONFIDENTIAL AND PROPRIETARY INFORMATION
+   8:main.c        ****  * WHICH IS THE PROPERTY OF your company.
+   9:main.c        ****  *
+  10:main.c        ****  * ========================================
+  11:main.c        **** */
+  12:main.c        **** #include "project.h"
+  13:main.c        **** #include "stdio.h"
+  14:main.c        **** #include "math.h"
+  15:main.c        **** #include "stdlib.h"
+  16:main.c        **** 
+  17:main.c        **** int32 C,V_I, V_V;
+  18:main.c        **** char Text[20];
+  19:main.c        **** char UART_Data_RX;
+  20:main.c        **** int k;
+  21:main.c        **** 
+  22:main.c        **** void medicion(){
+  28              		.loc 1 22 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 2
+
+
+  23:main.c        **** //     ADC_SelectConfiguration(1,1); //Configuración para corriente
+  24:main.c        ****     //Lee el voltaje de offset
+  25:main.c        **** //    AMux_FastSelect(1); //offset
+  26:main.c        **** //    ADC_StartConvert();
+  27:main.c        **** //    ADC_IsEndConversion(ADC_WAIT_FOR_RESULT);
+  28:main.c        **** //    C =  ADC_Read32();
+  29:main.c        **** //    ADC_StopConvert();
+  30:main.c        **** 
+  31:main.c        ****     //Lee el voltaje para la corriente
+  32:main.c        **** //    AMux_FastSelect(0); //corriente
+  33:main.c        **** //    ADC_StartConvert();
+  34:main.c        **** //    ADC_IsEndConversion(ADC_WAIT_FOR_RESULT);
+  35:main.c        **** //    C =  ADC_Read32() - C; //Resta el voltaje de offset
+  36:main.c        **** //    ADC_StopConvert();
+  37:main.c        ****     
+  38:main.c        **** //    V_I = ADC_CountsTo_uVolts(C);
+  39:main.c        ****        
+  40:main.c        **** //    ADC_SelectConfiguration(2,1); //Configuración del voltaje
+  41:main.c        **** 
+  42:main.c        ****     //Lee el voltaje de offset del voltaje
+  43:main.c        **** //    AMux_FastSelect(3); //offset
+  44:main.c        **** //    ADC_StartConvert();
+  45:main.c        **** //    ADC_IsEndConversion(ADC_WAIT_FOR_RESULT);
+  46:main.c        **** //    C =  ADC_Read32();
+  47:main.c        **** //    ADC_StopConvert();
+  48:main.c        **** 
+  49:main.c        ****     //Lee el voltaje del voltaje
+  50:main.c        **** //    AMux_FastSelect(2); //voltaje
+  51:main.c        **** //    ADC_StartConvert();
+  52:main.c        **** //    ADC_IsEndConversion(ADC_WAIT_FOR_RESULT);
+  53:main.c        **** //    C =  ADC_Read32() - C; //Resta el voltaje de offset
+  54:main.c        **** //    ADC_StopConvert();
+  55:main.c        ****     
+  56:main.c        **** //    V_V = ADC_CountsTo_uVolts(C);
+  57:main.c        ****     
+  58:main.c        **** //    sprintf(Text,"%ld,",V_I); //Convierte a texto
+  59:main.c        **** //    UART_PutString(Text);
+  60:main.c        ****       V_V =999;   
+  36              		.loc 1 60 0
+  37 0002 40F2E732 		movw	r2, #999
+  38 0006 074B     		ldr	r3, .L3
+  39 0008 1A60     		str	r2, [r3]
+  61:main.c        ****     sprintf(Text,"%ld",V_V); //Convierte a texto
+  40              		.loc 1 61 0
+  41 000a 074C     		ldr	r4, .L3+4
+  42 000c 0749     		ldr	r1, .L3+8
+  43 000e 2046     		mov	r0, r4
+  44 0010 FFF7FEFF 		bl	sprintf
+  45              	.LVL0:
+  62:main.c        ****     UART_PutString(Text);
+  46              		.loc 1 62 0
+  47 0014 2046     		mov	r0, r4
+  48 0016 FFF7FEFF 		bl	UART_PutString
+  49              	.LVL1:
+  63:main.c        ****     
+  64:main.c        ****     UART_PutChar(10);//Envia un enter
+  50              		.loc 1 64 0
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 3
+
+
+  51 001a 0A20     		movs	r0, #10
+  52 001c FFF7FEFF 		bl	UART_PutChar
+  53              	.LVL2:
+  54 0020 10BD     		pop	{r4, pc}
+  55              	.L4:
+  56 0022 00BF     		.align	2
+  57              	.L3:
+  58 0024 00000000 		.word	V_V
+  59 0028 00000000 		.word	Text
+  60 002c 00000000 		.word	.LC0
+  61              		.cfi_endproc
+  62              	.LFE64:
+  63              		.size	medicion, .-medicion
+  64              		.section	.text.main,"ax",%progbits
+  65              		.align	2
+  66              		.global	main
+  67              		.thumb
+  68              		.thumb_func
+  69              		.type	main, %function
+  70              	main:
+  71              	.LFB65:
+  65:main.c        **** }
+  66:main.c        **** 
+  67:main.c        **** int main(void)
+  68:main.c        **** {
+  72              		.loc 1 68 0
+  73              		.cfi_startproc
+  74              		@ Volatile: function does not return.
+  75              		@ args = 0, pretend = 0, frame = 0
+  76              		@ frame_needed = 0, uses_anonymous_args = 0
+  77 0000 08B5     		push	{r3, lr}
+  78              		.cfi_def_cfa_offset 8
+  79              		.cfi_offset 3, -8
+  80              		.cfi_offset 14, -4
+  69:main.c        ****     CyGlobalIntEnable; /* Enable global interrupts. */
+  81              		.loc 1 69 0
+  82              		.syntax unified
+  83              	@ 69 "main.c" 1
+  84 0002 62B6     		CPSIE   i
+  85              	@ 0 "" 2
+  70:main.c        ****     UART_Start(); //Inicializo el puerto serie
+  86              		.loc 1 70 0
+  87              		.thumb
+  88              		.syntax unified
+  89 0004 FFF7FEFF 		bl	UART_Start
+  90              	.LVL3:
+  91              	.L6:
+  71:main.c        **** 
+  72:main.c        **** 
+  73:main.c        ****     for(;;)
+  74:main.c        ****     {
+  75:main.c        ****         
+  76:main.c        ****         
+  77:main.c        ****                medicion();
+  92              		.loc 1 77 0 discriminator 1
+  93 0008 FFF7FEFF 		bl	medicion
+  94              	.LVL4:
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 4
+
+
+  78:main.c        ****                LED_Write(1);      
+  95              		.loc 1 78 0 discriminator 1
+  96 000c 0120     		movs	r0, #1
+  97 000e FFF7FEFF 		bl	LED_Write
+  98              	.LVL5:
+  79:main.c        ****                CyDelay(100);
+  99              		.loc 1 79 0 discriminator 1
+ 100 0012 6420     		movs	r0, #100
+ 101 0014 FFF7FEFF 		bl	CyDelay
+ 102              	.LVL6:
+  80:main.c        ****                LED_Write(0);
+ 103              		.loc 1 80 0 discriminator 1
+ 104 0018 0020     		movs	r0, #0
+ 105 001a FFF7FEFF 		bl	LED_Write
+ 106              	.LVL7:
+  81:main.c        ****                CyDelay(100);
+ 107              		.loc 1 81 0 discriminator 1
+ 108 001e 6420     		movs	r0, #100
+ 109 0020 FFF7FEFF 		bl	CyDelay
+ 110              	.LVL8:
+ 111 0024 F0E7     		b	.L6
+ 112              		.cfi_endproc
+ 113              	.LFE65:
+ 114              		.size	main, .-main
+ 115              		.comm	k,4,4
+ 116              		.comm	UART_Data_RX,1,1
+ 117              		.comm	Text,20,4
+ 118              		.comm	V_V,4,4
+ 119              		.comm	V_I,4,4
+ 120              		.comm	C,4,4
+ 121 0026 00BF     		.section	.rodata.str1.4,"aMS",%progbits,1
+ 122              		.align	2
+ 123              	.LC0:
+ 124 0000 256C6400 		.ascii	"%ld\000"
+ 125              		.text
+ 126              	.Letext0:
+ 127              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 128              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 129              		.file 4 "Generated_Source\\PSoC5/cytypes.h"
+ 130              		.file 5 "Generated_Source\\PSoC5/core_cm3.h"
+ 131              		.file 6 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 132              		.file 7 "Generated_Source\\PSoC5/UART.h"
+ 133              		.file 8 "Generated_Source\\PSoC5/LED.h"
+ 134              		.file 9 "Generated_Source\\PSoC5/CyLib.h"
+ 135              		.section	.debug_info,"",%progbits
+ 136              	.Ldebug_info0:
+ 137 0000 45020000 		.4byte	0x245
+ 138 0004 0400     		.2byte	0x4
+ 139 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 140 000a 04       		.byte	0x4
+ 141 000b 01       		.uleb128 0x1
+ 142 000c 3B000000 		.4byte	.LASF26
+ 143 0010 0C       		.byte	0xc
+ 144 0011 D0010000 		.4byte	.LASF27
+ 145 0015 C9000000 		.4byte	.LASF28
+ 146 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 147 001d 00000000 		.4byte	0
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 5
+
+
+ 148 0021 00000000 		.4byte	.Ldebug_line0
+ 149 0025 02       		.uleb128 0x2
+ 150 0026 01       		.byte	0x1
+ 151 0027 06       		.byte	0x6
+ 152 0028 FB010000 		.4byte	.LASF0
+ 153 002c 02       		.uleb128 0x2
+ 154 002d 01       		.byte	0x1
+ 155 002e 08       		.byte	0x8
+ 156 002f 2D000000 		.4byte	.LASF1
+ 157 0033 02       		.uleb128 0x2
+ 158 0034 02       		.byte	0x2
+ 159 0035 05       		.byte	0x5
+ 160 0036 DC010000 		.4byte	.LASF2
+ 161 003a 02       		.uleb128 0x2
+ 162 003b 02       		.byte	0x2
+ 163 003c 07       		.byte	0x7
+ 164 003d 14000000 		.4byte	.LASF3
+ 165 0041 03       		.uleb128 0x3
+ 166 0042 0A000000 		.4byte	.LASF9
+ 167 0046 02       		.byte	0x2
+ 168 0047 3F       		.byte	0x3f
+ 169 0048 4C000000 		.4byte	0x4c
+ 170 004c 02       		.uleb128 0x2
+ 171 004d 04       		.byte	0x4
+ 172 004e 05       		.byte	0x5
+ 173 004f E6010000 		.4byte	.LASF4
+ 174 0053 02       		.uleb128 0x2
+ 175 0054 04       		.byte	0x4
+ 176 0055 07       		.byte	0x7
+ 177 0056 21010000 		.4byte	.LASF5
+ 178 005a 02       		.uleb128 0x2
+ 179 005b 08       		.byte	0x8
+ 180 005c 05       		.byte	0x5
+ 181 005d C2010000 		.4byte	.LASF6
+ 182 0061 02       		.uleb128 0x2
+ 183 0062 08       		.byte	0x8
+ 184 0063 07       		.byte	0x7
+ 185 0064 85010000 		.4byte	.LASF7
+ 186 0068 04       		.uleb128 0x4
+ 187 0069 04       		.byte	0x4
+ 188 006a 05       		.byte	0x5
+ 189 006b 696E7400 		.ascii	"int\000"
+ 190 006f 02       		.uleb128 0x2
+ 191 0070 04       		.byte	0x4
+ 192 0071 07       		.byte	0x7
+ 193 0072 6F010000 		.4byte	.LASF8
+ 194 0076 03       		.uleb128 0x3
+ 195 0077 A4010000 		.4byte	.LASF10
+ 196 007b 03       		.byte	0x3
+ 197 007c 2C       		.byte	0x2c
+ 198 007d 41000000 		.4byte	0x41
+ 199 0081 05       		.uleb128 0x5
+ 200 0082 33010000 		.4byte	.LASF11
+ 201 0086 04       		.byte	0x4
+ 202 0087 E901     		.2byte	0x1e9
+ 203 0089 4C000000 		.4byte	0x4c
+ 204 008d 02       		.uleb128 0x2
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 6
+
+
+ 205 008e 04       		.byte	0x4
+ 206 008f 04       		.byte	0x4
+ 207 0090 27000000 		.4byte	.LASF12
+ 208 0094 02       		.uleb128 0x2
+ 209 0095 08       		.byte	0x8
+ 210 0096 04       		.byte	0x4
+ 211 0097 51010000 		.4byte	.LASF13
+ 212 009b 02       		.uleb128 0x2
+ 213 009c 01       		.byte	0x1
+ 214 009d 08       		.byte	0x8
+ 215 009e D7010000 		.4byte	.LASF14
+ 216 00a2 02       		.uleb128 0x2
+ 217 00a3 08       		.byte	0x8
+ 218 00a4 04       		.byte	0x4
+ 219 00a5 EF010000 		.4byte	.LASF15
+ 220 00a9 02       		.uleb128 0x2
+ 221 00aa 04       		.byte	0x4
+ 222 00ab 07       		.byte	0x7
+ 223 00ac B9010000 		.4byte	.LASF16
+ 224 00b0 06       		.uleb128 0x6
+ 225 00b1 7C010000 		.4byte	.LASF29
+ 226 00b5 01       		.byte	0x1
+ 227 00b6 16       		.byte	0x16
+ 228 00b7 00000000 		.4byte	.LFB64
+ 229 00bb 30000000 		.4byte	.LFE64-.LFB64
+ 230 00bf 01       		.uleb128 0x1
+ 231 00c0 9C       		.byte	0x9c
+ 232 00c1 0D010000 		.4byte	0x10d
+ 233 00c5 07       		.uleb128 0x7
+ 234 00c6 14000000 		.4byte	.LVL0
+ 235 00ca 06020000 		.4byte	0x206
+ 236 00ce E9000000 		.4byte	0xe9
+ 237 00d2 08       		.uleb128 0x8
+ 238 00d3 01       		.uleb128 0x1
+ 239 00d4 50       		.byte	0x50
+ 240 00d5 02       		.uleb128 0x2
+ 241 00d6 74       		.byte	0x74
+ 242 00d7 00       		.sleb128 0
+ 243 00d8 08       		.uleb128 0x8
+ 244 00d9 01       		.uleb128 0x1
+ 245 00da 51       		.byte	0x51
+ 246 00db 05       		.uleb128 0x5
+ 247 00dc 03       		.byte	0x3
+ 248 00dd 00000000 		.4byte	.LC0
+ 249 00e1 08       		.uleb128 0x8
+ 250 00e2 01       		.uleb128 0x1
+ 251 00e3 52       		.byte	0x52
+ 252 00e4 03       		.uleb128 0x3
+ 253 00e5 0A       		.byte	0xa
+ 254 00e6 E703     		.2byte	0x3e7
+ 255 00e8 00       		.byte	0
+ 256 00e9 07       		.uleb128 0x7
+ 257 00ea 1A000000 		.4byte	.LVL1
+ 258 00ee 11020000 		.4byte	0x211
+ 259 00f2 FD000000 		.4byte	0xfd
+ 260 00f6 08       		.uleb128 0x8
+ 261 00f7 01       		.uleb128 0x1
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 7
+
+
+ 262 00f8 50       		.byte	0x50
+ 263 00f9 02       		.uleb128 0x2
+ 264 00fa 74       		.byte	0x74
+ 265 00fb 00       		.sleb128 0
+ 266 00fc 00       		.byte	0
+ 267 00fd 09       		.uleb128 0x9
+ 268 00fe 20000000 		.4byte	.LVL2
+ 269 0102 1C020000 		.4byte	0x21c
+ 270 0106 08       		.uleb128 0x8
+ 271 0107 01       		.uleb128 0x1
+ 272 0108 50       		.byte	0x50
+ 273 0109 01       		.uleb128 0x1
+ 274 010a 3A       		.byte	0x3a
+ 275 010b 00       		.byte	0
+ 276 010c 00       		.byte	0
+ 277 010d 0A       		.uleb128 0xa
+ 278 010e 58010000 		.4byte	.LASF30
+ 279 0112 01       		.byte	0x1
+ 280 0113 43       		.byte	0x43
+ 281 0114 68000000 		.4byte	0x68
+ 282 0118 00000000 		.4byte	.LFB65
+ 283 011c 26000000 		.4byte	.LFE65-.LFB65
+ 284 0120 01       		.uleb128 0x1
+ 285 0121 9C       		.byte	0x9c
+ 286 0122 83010000 		.4byte	0x183
+ 287 0126 0B       		.uleb128 0xb
+ 288 0127 08000000 		.4byte	.LVL3
+ 289 012b 27020000 		.4byte	0x227
+ 290 012f 0B       		.uleb128 0xb
+ 291 0130 0C000000 		.4byte	.LVL4
+ 292 0134 B0000000 		.4byte	0xb0
+ 293 0138 07       		.uleb128 0x7
+ 294 0139 12000000 		.4byte	.LVL5
+ 295 013d 32020000 		.4byte	0x232
+ 296 0141 4B010000 		.4byte	0x14b
+ 297 0145 08       		.uleb128 0x8
+ 298 0146 01       		.uleb128 0x1
+ 299 0147 50       		.byte	0x50
+ 300 0148 01       		.uleb128 0x1
+ 301 0149 31       		.byte	0x31
+ 302 014a 00       		.byte	0
+ 303 014b 07       		.uleb128 0x7
+ 304 014c 18000000 		.4byte	.LVL6
+ 305 0150 3D020000 		.4byte	0x23d
+ 306 0154 5F010000 		.4byte	0x15f
+ 307 0158 08       		.uleb128 0x8
+ 308 0159 01       		.uleb128 0x1
+ 309 015a 50       		.byte	0x50
+ 310 015b 02       		.uleb128 0x2
+ 311 015c 08       		.byte	0x8
+ 312 015d 64       		.byte	0x64
+ 313 015e 00       		.byte	0
+ 314 015f 07       		.uleb128 0x7
+ 315 0160 1E000000 		.4byte	.LVL7
+ 316 0164 32020000 		.4byte	0x232
+ 317 0168 72010000 		.4byte	0x172
+ 318 016c 08       		.uleb128 0x8
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 8
+
+
+ 319 016d 01       		.uleb128 0x1
+ 320 016e 50       		.byte	0x50
+ 321 016f 01       		.uleb128 0x1
+ 322 0170 30       		.byte	0x30
+ 323 0171 00       		.byte	0
+ 324 0172 09       		.uleb128 0x9
+ 325 0173 24000000 		.4byte	.LVL8
+ 326 0177 3D020000 		.4byte	0x23d
+ 327 017b 08       		.uleb128 0x8
+ 328 017c 01       		.uleb128 0x1
+ 329 017d 50       		.byte	0x50
+ 330 017e 02       		.uleb128 0x2
+ 331 017f 08       		.byte	0x8
+ 332 0180 64       		.byte	0x64
+ 333 0181 00       		.byte	0
+ 334 0182 00       		.byte	0
+ 335 0183 0C       		.uleb128 0xc
+ 336 0184 44010000 		.4byte	.LASF17
+ 337 0188 05       		.byte	0x5
+ 338 0189 1207     		.2byte	0x712
+ 339 018b 8F010000 		.4byte	0x18f
+ 340 018f 0D       		.uleb128 0xd
+ 341 0190 76000000 		.4byte	0x76
+ 342 0194 0E       		.uleb128 0xe
+ 343 0195 4300     		.ascii	"C\000"
+ 344 0197 01       		.byte	0x1
+ 345 0198 11       		.byte	0x11
+ 346 0199 81000000 		.4byte	0x81
+ 347 019d 05       		.uleb128 0x5
+ 348 019e 03       		.byte	0x3
+ 349 019f 00000000 		.4byte	C
+ 350 01a3 0E       		.uleb128 0xe
+ 351 01a4 565F4900 		.ascii	"V_I\000"
+ 352 01a8 01       		.byte	0x1
+ 353 01a9 11       		.byte	0x11
+ 354 01aa 81000000 		.4byte	0x81
+ 355 01ae 05       		.uleb128 0x5
+ 356 01af 03       		.byte	0x3
+ 357 01b0 00000000 		.4byte	V_I
+ 358 01b4 0E       		.uleb128 0xe
+ 359 01b5 565F5600 		.ascii	"V_V\000"
+ 360 01b9 01       		.byte	0x1
+ 361 01ba 11       		.byte	0x11
+ 362 01bb 81000000 		.4byte	0x81
+ 363 01bf 05       		.uleb128 0x5
+ 364 01c0 03       		.byte	0x3
+ 365 01c1 00000000 		.4byte	V_V
+ 366 01c5 0F       		.uleb128 0xf
+ 367 01c6 9B000000 		.4byte	0x9b
+ 368 01ca D5010000 		.4byte	0x1d5
+ 369 01ce 10       		.uleb128 0x10
+ 370 01cf A9000000 		.4byte	0xa9
+ 371 01d3 13       		.byte	0x13
+ 372 01d4 00       		.byte	0
+ 373 01d5 11       		.uleb128 0x11
+ 374 01d6 6A010000 		.4byte	.LASF18
+ 375 01da 01       		.byte	0x1
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 9
+
+
+ 376 01db 12       		.byte	0x12
+ 377 01dc C5010000 		.4byte	0x1c5
+ 378 01e0 05       		.uleb128 0x5
+ 379 01e1 03       		.byte	0x3
+ 380 01e2 00000000 		.4byte	Text
+ 381 01e6 11       		.uleb128 0x11
+ 382 01e7 5D010000 		.4byte	.LASF19
+ 383 01eb 01       		.byte	0x1
+ 384 01ec 13       		.byte	0x13
+ 385 01ed 9B000000 		.4byte	0x9b
+ 386 01f1 05       		.uleb128 0x5
+ 387 01f2 03       		.byte	0x3
+ 388 01f3 00000000 		.4byte	UART_Data_RX
+ 389 01f7 0E       		.uleb128 0xe
+ 390 01f8 6B00     		.ascii	"k\000"
+ 391 01fa 01       		.byte	0x1
+ 392 01fb 14       		.byte	0x14
+ 393 01fc 68000000 		.4byte	0x68
+ 394 0200 05       		.uleb128 0x5
+ 395 0201 03       		.byte	0x3
+ 396 0202 00000000 		.4byte	k
+ 397 0206 12       		.uleb128 0x12
+ 398 0207 9C010000 		.4byte	.LASF20
+ 399 020b 9C010000 		.4byte	.LASF20
+ 400 020f 06       		.byte	0x6
+ 401 0210 E7       		.byte	0xe7
+ 402 0211 12       		.uleb128 0x12
+ 403 0212 07020000 		.4byte	.LASF21
+ 404 0216 07020000 		.4byte	.LASF21
+ 405 021a 07       		.byte	0x7
+ 406 021b 8B       		.byte	0x8b
+ 407 021c 12       		.uleb128 0x12
+ 408 021d AC010000 		.4byte	.LASF22
+ 409 0221 AC010000 		.4byte	.LASF22
+ 410 0225 07       		.byte	0x7
+ 411 0226 8A       		.byte	0x8a
+ 412 0227 12       		.uleb128 0x12
+ 413 0228 39010000 		.4byte	.LASF23
+ 414 022c 39010000 		.4byte	.LASF23
+ 415 0230 07       		.byte	0x7
+ 416 0231 54       		.byte	0x54
+ 417 0232 12       		.uleb128 0x12
+ 418 0233 00000000 		.4byte	.LASF24
+ 419 0237 00000000 		.4byte	.LASF24
+ 420 023b 08       		.byte	0x8
+ 421 023c 26       		.byte	0x26
+ 422 023d 12       		.uleb128 0x12
+ 423 023e 16020000 		.4byte	.LASF25
+ 424 0242 16020000 		.4byte	.LASF25
+ 425 0246 09       		.byte	0x9
+ 426 0247 76       		.byte	0x76
+ 427 0248 00       		.byte	0
+ 428              		.section	.debug_abbrev,"",%progbits
+ 429              	.Ldebug_abbrev0:
+ 430 0000 01       		.uleb128 0x1
+ 431 0001 11       		.uleb128 0x11
+ 432 0002 01       		.byte	0x1
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 10
+
+
+ 433 0003 25       		.uleb128 0x25
+ 434 0004 0E       		.uleb128 0xe
+ 435 0005 13       		.uleb128 0x13
+ 436 0006 0B       		.uleb128 0xb
+ 437 0007 03       		.uleb128 0x3
+ 438 0008 0E       		.uleb128 0xe
+ 439 0009 1B       		.uleb128 0x1b
+ 440 000a 0E       		.uleb128 0xe
+ 441 000b 55       		.uleb128 0x55
+ 442 000c 17       		.uleb128 0x17
+ 443 000d 11       		.uleb128 0x11
+ 444 000e 01       		.uleb128 0x1
+ 445 000f 10       		.uleb128 0x10
+ 446 0010 17       		.uleb128 0x17
+ 447 0011 00       		.byte	0
+ 448 0012 00       		.byte	0
+ 449 0013 02       		.uleb128 0x2
+ 450 0014 24       		.uleb128 0x24
+ 451 0015 00       		.byte	0
+ 452 0016 0B       		.uleb128 0xb
+ 453 0017 0B       		.uleb128 0xb
+ 454 0018 3E       		.uleb128 0x3e
+ 455 0019 0B       		.uleb128 0xb
+ 456 001a 03       		.uleb128 0x3
+ 457 001b 0E       		.uleb128 0xe
+ 458 001c 00       		.byte	0
+ 459 001d 00       		.byte	0
+ 460 001e 03       		.uleb128 0x3
+ 461 001f 16       		.uleb128 0x16
+ 462 0020 00       		.byte	0
+ 463 0021 03       		.uleb128 0x3
+ 464 0022 0E       		.uleb128 0xe
+ 465 0023 3A       		.uleb128 0x3a
+ 466 0024 0B       		.uleb128 0xb
+ 467 0025 3B       		.uleb128 0x3b
+ 468 0026 0B       		.uleb128 0xb
+ 469 0027 49       		.uleb128 0x49
+ 470 0028 13       		.uleb128 0x13
+ 471 0029 00       		.byte	0
+ 472 002a 00       		.byte	0
+ 473 002b 04       		.uleb128 0x4
+ 474 002c 24       		.uleb128 0x24
+ 475 002d 00       		.byte	0
+ 476 002e 0B       		.uleb128 0xb
+ 477 002f 0B       		.uleb128 0xb
+ 478 0030 3E       		.uleb128 0x3e
+ 479 0031 0B       		.uleb128 0xb
+ 480 0032 03       		.uleb128 0x3
+ 481 0033 08       		.uleb128 0x8
+ 482 0034 00       		.byte	0
+ 483 0035 00       		.byte	0
+ 484 0036 05       		.uleb128 0x5
+ 485 0037 16       		.uleb128 0x16
+ 486 0038 00       		.byte	0
+ 487 0039 03       		.uleb128 0x3
+ 488 003a 0E       		.uleb128 0xe
+ 489 003b 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 11
+
+
+ 490 003c 0B       		.uleb128 0xb
+ 491 003d 3B       		.uleb128 0x3b
+ 492 003e 05       		.uleb128 0x5
+ 493 003f 49       		.uleb128 0x49
+ 494 0040 13       		.uleb128 0x13
+ 495 0041 00       		.byte	0
+ 496 0042 00       		.byte	0
+ 497 0043 06       		.uleb128 0x6
+ 498 0044 2E       		.uleb128 0x2e
+ 499 0045 01       		.byte	0x1
+ 500 0046 3F       		.uleb128 0x3f
+ 501 0047 19       		.uleb128 0x19
+ 502 0048 03       		.uleb128 0x3
+ 503 0049 0E       		.uleb128 0xe
+ 504 004a 3A       		.uleb128 0x3a
+ 505 004b 0B       		.uleb128 0xb
+ 506 004c 3B       		.uleb128 0x3b
+ 507 004d 0B       		.uleb128 0xb
+ 508 004e 11       		.uleb128 0x11
+ 509 004f 01       		.uleb128 0x1
+ 510 0050 12       		.uleb128 0x12
+ 511 0051 06       		.uleb128 0x6
+ 512 0052 40       		.uleb128 0x40
+ 513 0053 18       		.uleb128 0x18
+ 514 0054 9742     		.uleb128 0x2117
+ 515 0056 19       		.uleb128 0x19
+ 516 0057 01       		.uleb128 0x1
+ 517 0058 13       		.uleb128 0x13
+ 518 0059 00       		.byte	0
+ 519 005a 00       		.byte	0
+ 520 005b 07       		.uleb128 0x7
+ 521 005c 898201   		.uleb128 0x4109
+ 522 005f 01       		.byte	0x1
+ 523 0060 11       		.uleb128 0x11
+ 524 0061 01       		.uleb128 0x1
+ 525 0062 31       		.uleb128 0x31
+ 526 0063 13       		.uleb128 0x13
+ 527 0064 01       		.uleb128 0x1
+ 528 0065 13       		.uleb128 0x13
+ 529 0066 00       		.byte	0
+ 530 0067 00       		.byte	0
+ 531 0068 08       		.uleb128 0x8
+ 532 0069 8A8201   		.uleb128 0x410a
+ 533 006c 00       		.byte	0
+ 534 006d 02       		.uleb128 0x2
+ 535 006e 18       		.uleb128 0x18
+ 536 006f 9142     		.uleb128 0x2111
+ 537 0071 18       		.uleb128 0x18
+ 538 0072 00       		.byte	0
+ 539 0073 00       		.byte	0
+ 540 0074 09       		.uleb128 0x9
+ 541 0075 898201   		.uleb128 0x4109
+ 542 0078 01       		.byte	0x1
+ 543 0079 11       		.uleb128 0x11
+ 544 007a 01       		.uleb128 0x1
+ 545 007b 31       		.uleb128 0x31
+ 546 007c 13       		.uleb128 0x13
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 12
+
+
+ 547 007d 00       		.byte	0
+ 548 007e 00       		.byte	0
+ 549 007f 0A       		.uleb128 0xa
+ 550 0080 2E       		.uleb128 0x2e
+ 551 0081 01       		.byte	0x1
+ 552 0082 3F       		.uleb128 0x3f
+ 553 0083 19       		.uleb128 0x19
+ 554 0084 03       		.uleb128 0x3
+ 555 0085 0E       		.uleb128 0xe
+ 556 0086 3A       		.uleb128 0x3a
+ 557 0087 0B       		.uleb128 0xb
+ 558 0088 3B       		.uleb128 0x3b
+ 559 0089 0B       		.uleb128 0xb
+ 560 008a 27       		.uleb128 0x27
+ 561 008b 19       		.uleb128 0x19
+ 562 008c 49       		.uleb128 0x49
+ 563 008d 13       		.uleb128 0x13
+ 564 008e 8701     		.uleb128 0x87
+ 565 0090 19       		.uleb128 0x19
+ 566 0091 11       		.uleb128 0x11
+ 567 0092 01       		.uleb128 0x1
+ 568 0093 12       		.uleb128 0x12
+ 569 0094 06       		.uleb128 0x6
+ 570 0095 40       		.uleb128 0x40
+ 571 0096 18       		.uleb128 0x18
+ 572 0097 9742     		.uleb128 0x2117
+ 573 0099 19       		.uleb128 0x19
+ 574 009a 01       		.uleb128 0x1
+ 575 009b 13       		.uleb128 0x13
+ 576 009c 00       		.byte	0
+ 577 009d 00       		.byte	0
+ 578 009e 0B       		.uleb128 0xb
+ 579 009f 898201   		.uleb128 0x4109
+ 580 00a2 00       		.byte	0
+ 581 00a3 11       		.uleb128 0x11
+ 582 00a4 01       		.uleb128 0x1
+ 583 00a5 31       		.uleb128 0x31
+ 584 00a6 13       		.uleb128 0x13
+ 585 00a7 00       		.byte	0
+ 586 00a8 00       		.byte	0
+ 587 00a9 0C       		.uleb128 0xc
+ 588 00aa 34       		.uleb128 0x34
+ 589 00ab 00       		.byte	0
+ 590 00ac 03       		.uleb128 0x3
+ 591 00ad 0E       		.uleb128 0xe
+ 592 00ae 3A       		.uleb128 0x3a
+ 593 00af 0B       		.uleb128 0xb
+ 594 00b0 3B       		.uleb128 0x3b
+ 595 00b1 05       		.uleb128 0x5
+ 596 00b2 49       		.uleb128 0x49
+ 597 00b3 13       		.uleb128 0x13
+ 598 00b4 3F       		.uleb128 0x3f
+ 599 00b5 19       		.uleb128 0x19
+ 600 00b6 3C       		.uleb128 0x3c
+ 601 00b7 19       		.uleb128 0x19
+ 602 00b8 00       		.byte	0
+ 603 00b9 00       		.byte	0
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 13
+
+
+ 604 00ba 0D       		.uleb128 0xd
+ 605 00bb 35       		.uleb128 0x35
+ 606 00bc 00       		.byte	0
+ 607 00bd 49       		.uleb128 0x49
+ 608 00be 13       		.uleb128 0x13
+ 609 00bf 00       		.byte	0
+ 610 00c0 00       		.byte	0
+ 611 00c1 0E       		.uleb128 0xe
+ 612 00c2 34       		.uleb128 0x34
+ 613 00c3 00       		.byte	0
+ 614 00c4 03       		.uleb128 0x3
+ 615 00c5 08       		.uleb128 0x8
+ 616 00c6 3A       		.uleb128 0x3a
+ 617 00c7 0B       		.uleb128 0xb
+ 618 00c8 3B       		.uleb128 0x3b
+ 619 00c9 0B       		.uleb128 0xb
+ 620 00ca 49       		.uleb128 0x49
+ 621 00cb 13       		.uleb128 0x13
+ 622 00cc 3F       		.uleb128 0x3f
+ 623 00cd 19       		.uleb128 0x19
+ 624 00ce 02       		.uleb128 0x2
+ 625 00cf 18       		.uleb128 0x18
+ 626 00d0 00       		.byte	0
+ 627 00d1 00       		.byte	0
+ 628 00d2 0F       		.uleb128 0xf
+ 629 00d3 01       		.uleb128 0x1
+ 630 00d4 01       		.byte	0x1
+ 631 00d5 49       		.uleb128 0x49
+ 632 00d6 13       		.uleb128 0x13
+ 633 00d7 01       		.uleb128 0x1
+ 634 00d8 13       		.uleb128 0x13
+ 635 00d9 00       		.byte	0
+ 636 00da 00       		.byte	0
+ 637 00db 10       		.uleb128 0x10
+ 638 00dc 21       		.uleb128 0x21
+ 639 00dd 00       		.byte	0
+ 640 00de 49       		.uleb128 0x49
+ 641 00df 13       		.uleb128 0x13
+ 642 00e0 2F       		.uleb128 0x2f
+ 643 00e1 0B       		.uleb128 0xb
+ 644 00e2 00       		.byte	0
+ 645 00e3 00       		.byte	0
+ 646 00e4 11       		.uleb128 0x11
+ 647 00e5 34       		.uleb128 0x34
+ 648 00e6 00       		.byte	0
+ 649 00e7 03       		.uleb128 0x3
+ 650 00e8 0E       		.uleb128 0xe
+ 651 00e9 3A       		.uleb128 0x3a
+ 652 00ea 0B       		.uleb128 0xb
+ 653 00eb 3B       		.uleb128 0x3b
+ 654 00ec 0B       		.uleb128 0xb
+ 655 00ed 49       		.uleb128 0x49
+ 656 00ee 13       		.uleb128 0x13
+ 657 00ef 3F       		.uleb128 0x3f
+ 658 00f0 19       		.uleb128 0x19
+ 659 00f1 02       		.uleb128 0x2
+ 660 00f2 18       		.uleb128 0x18
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 14
+
+
+ 661 00f3 00       		.byte	0
+ 662 00f4 00       		.byte	0
+ 663 00f5 12       		.uleb128 0x12
+ 664 00f6 2E       		.uleb128 0x2e
+ 665 00f7 00       		.byte	0
+ 666 00f8 3F       		.uleb128 0x3f
+ 667 00f9 19       		.uleb128 0x19
+ 668 00fa 3C       		.uleb128 0x3c
+ 669 00fb 19       		.uleb128 0x19
+ 670 00fc 6E       		.uleb128 0x6e
+ 671 00fd 0E       		.uleb128 0xe
+ 672 00fe 03       		.uleb128 0x3
+ 673 00ff 0E       		.uleb128 0xe
+ 674 0100 3A       		.uleb128 0x3a
+ 675 0101 0B       		.uleb128 0xb
+ 676 0102 3B       		.uleb128 0x3b
+ 677 0103 0B       		.uleb128 0xb
+ 678 0104 00       		.byte	0
+ 679 0105 00       		.byte	0
+ 680 0106 00       		.byte	0
+ 681              		.section	.debug_aranges,"",%progbits
+ 682 0000 24000000 		.4byte	0x24
+ 683 0004 0200     		.2byte	0x2
+ 684 0006 00000000 		.4byte	.Ldebug_info0
+ 685 000a 04       		.byte	0x4
+ 686 000b 00       		.byte	0
+ 687 000c 0000     		.2byte	0
+ 688 000e 0000     		.2byte	0
+ 689 0010 00000000 		.4byte	.LFB64
+ 690 0014 30000000 		.4byte	.LFE64-.LFB64
+ 691 0018 00000000 		.4byte	.LFB65
+ 692 001c 26000000 		.4byte	.LFE65-.LFB65
+ 693 0020 00000000 		.4byte	0
+ 694 0024 00000000 		.4byte	0
+ 695              		.section	.debug_ranges,"",%progbits
+ 696              	.Ldebug_ranges0:
+ 697 0000 00000000 		.4byte	.LFB64
+ 698 0004 30000000 		.4byte	.LFE64
+ 699 0008 00000000 		.4byte	.LFB65
+ 700 000c 26000000 		.4byte	.LFE65
+ 701 0010 00000000 		.4byte	0
+ 702 0014 00000000 		.4byte	0
+ 703              		.section	.debug_line,"",%progbits
+ 704              	.Ldebug_line0:
+ 705 0000 23020000 		.section	.debug_str,"MS",%progbits,1
+ 705      0200DD01 
+ 705      00000201 
+ 705      FB0E0D00 
+ 705      01010101 
+ 706              	.LASF24:
+ 707 0000 4C45445F 		.ascii	"LED_Write\000"
+ 707      57726974 
+ 707      6500
+ 708              	.LASF9:
+ 709 000a 5F5F696E 		.ascii	"__int32_t\000"
+ 709      7433325F 
+ 709      7400
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 15
+
+
+ 710              	.LASF3:
+ 711 0014 73686F72 		.ascii	"short unsigned int\000"
+ 711      7420756E 
+ 711      7369676E 
+ 711      65642069 
+ 711      6E7400
+ 712              	.LASF12:
+ 713 0027 666C6F61 		.ascii	"float\000"
+ 713      7400
+ 714              	.LASF1:
+ 715 002d 756E7369 		.ascii	"unsigned char\000"
+ 715      676E6564 
+ 715      20636861 
+ 715      7200
+ 716              	.LASF26:
+ 717 003b 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 717      43313120 
+ 717      352E342E 
+ 717      31203230 
+ 717      31363036 
+ 718 006e 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m3 -mthumb -g -O"
+ 718      20726576 
+ 718      6973696F 
+ 718      6E203233 
+ 718      37373135 
+ 719 00a1 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 719      66756E63 
+ 719      74696F6E 
+ 719      2D736563 
+ 719      74696F6E 
+ 720              	.LASF28:
+ 721 00c9 433A5C55 		.ascii	"C:\\Users\\guraz\\Downloads\\ADCDeltaSigmaSalvador\\"
+ 721      73657273 
+ 721      5C677572 
+ 721      617A5C44 
+ 721      6F776E6C 
+ 722 00f8 41444344 		.ascii	"ADCDeltaSigma\\Workspace01\\Design01.cydsn\000"
+ 722      656C7461 
+ 722      5369676D 
+ 722      615C576F 
+ 722      726B7370 
+ 723              	.LASF5:
+ 724 0121 6C6F6E67 		.ascii	"long unsigned int\000"
+ 724      20756E73 
+ 724      69676E65 
+ 724      6420696E 
+ 724      7400
+ 725              	.LASF11:
+ 726 0133 696E7433 		.ascii	"int32\000"
+ 726      3200
+ 727              	.LASF23:
+ 728 0139 55415254 		.ascii	"UART_Start\000"
+ 728      5F537461 
+ 728      727400
+ 729              	.LASF17:
+ 730 0144 49544D5F 		.ascii	"ITM_RxBuffer\000"
+ 730      52784275 
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 16
+
+
+ 730      66666572 
+ 730      00
+ 731              	.LASF13:
+ 732 0151 646F7562 		.ascii	"double\000"
+ 732      6C6500
+ 733              	.LASF30:
+ 734 0158 6D61696E 		.ascii	"main\000"
+ 734      00
+ 735              	.LASF19:
+ 736 015d 55415254 		.ascii	"UART_Data_RX\000"
+ 736      5F446174 
+ 736      615F5258 
+ 736      00
+ 737              	.LASF18:
+ 738 016a 54657874 		.ascii	"Text\000"
+ 738      00
+ 739              	.LASF8:
+ 740 016f 756E7369 		.ascii	"unsigned int\000"
+ 740      676E6564 
+ 740      20696E74 
+ 740      00
+ 741              	.LASF29:
+ 742 017c 6D656469 		.ascii	"medicion\000"
+ 742      63696F6E 
+ 742      00
+ 743              	.LASF7:
+ 744 0185 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 744      206C6F6E 
+ 744      6720756E 
+ 744      7369676E 
+ 744      65642069 
+ 745              	.LASF20:
+ 746 019c 73707269 		.ascii	"sprintf\000"
+ 746      6E746600 
+ 747              	.LASF10:
+ 748 01a4 696E7433 		.ascii	"int32_t\000"
+ 748      325F7400 
+ 749              	.LASF22:
+ 750 01ac 55415254 		.ascii	"UART_PutChar\000"
+ 750      5F507574 
+ 750      43686172 
+ 750      00
+ 751              	.LASF16:
+ 752 01b9 73697A65 		.ascii	"sizetype\000"
+ 752      74797065 
+ 752      00
+ 753              	.LASF6:
+ 754 01c2 6C6F6E67 		.ascii	"long long int\000"
+ 754      206C6F6E 
+ 754      6720696E 
+ 754      7400
+ 755              	.LASF27:
+ 756 01d0 6D61696E 		.ascii	"main.c\000"
+ 756      2E6300
+ 757              	.LASF14:
+ 758 01d7 63686172 		.ascii	"char\000"
+ 758      00
+ARM GAS  C:\Users\guraz\AppData\Local\Temp\ccj1po86.s 			page 17
+
+
+ 759              	.LASF2:
+ 760 01dc 73686F72 		.ascii	"short int\000"
+ 760      7420696E 
+ 760      7400
+ 761              	.LASF4:
+ 762 01e6 6C6F6E67 		.ascii	"long int\000"
+ 762      20696E74 
+ 762      00
+ 763              	.LASF15:
+ 764 01ef 6C6F6E67 		.ascii	"long double\000"
+ 764      20646F75 
+ 764      626C6500 
+ 765              	.LASF0:
+ 766 01fb 7369676E 		.ascii	"signed char\000"
+ 766      65642063 
+ 766      68617200 
+ 767              	.LASF21:
+ 768 0207 55415254 		.ascii	"UART_PutString\000"
+ 768      5F507574 
+ 768      53747269 
+ 768      6E6700
+ 769              	.LASF25:
+ 770 0216 43794465 		.ascii	"CyDelay\000"
+ 770      6C617900 
+ 771              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

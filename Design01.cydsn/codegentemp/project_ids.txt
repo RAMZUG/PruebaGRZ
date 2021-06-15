@@ -1,0 +1,6 @@
+C:\Users\guraz\Downloads\ADCDeltaSigmaSalvador\ADCDeltaSigma\Workspace01\Design01.cydsn\Design01.cyprj|0abb3f37-0929-42e3-8eda-87115f103625
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\default\CyAnnotationLibrary\CyAnnotationLibrary.cylib\CyAnnotationLibrary.cyprj|eb8fcf2d-8319-4080-9858-e1a356fd1a3f
+C:\Users\guraz\Documents\PSoC Creator\4.2\Downloads ( 4.2).cylib\Downloads ( 4.2).cyprj|7911ad3d-ea8c-4c7f-9236-38ace1dd57eb
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibraryupdates\CyComponentLibraryUpdates.cylib\CyComponentLibraryUpdates.cyprj|55a22b26-45b6-44b2-94a8-554193fb89b7
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cycomponentlibrary\CyComponentLibrary.cylib\CyComponentLibrary.cyprj|57184bba-88e7-4568-a63e-5cc2c4075faf
+C:\Program Files (x86)\Cypress\PSoC Creator\4.2\PSoC Creator\psoc\content\cyprimitives\CyPrimitives.cylib\CyPrimitives.cyprj|ae12f4fa-c486-429b-af85-fdf0e393c4f1
